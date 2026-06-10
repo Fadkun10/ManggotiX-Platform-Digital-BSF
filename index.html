@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManggotiX - Platform Digital Terintegrasi Larva BSF</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons for clean UI icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- MathJax for rendering LaTeX formulas beautifully -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f4fbf7; /* Beautiful soft sage background */
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #eefcf5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a7f3d0;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #34d399;
+        }
+        /* Custom Green Glow & Transitions */
+        .glow-emerald {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+        }
+        .tab-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-emerald-50/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-2 rounded-xl shadow-md shadow-emerald-200">
+                    <i data-lucide="leaf" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5">
+                        Manggoti<span class="text-emerald-600">X</span>
+                    </h1>
+                    <p class="text-[9px] text-emerald-700 font-bold tracking-wider uppercase">Zero Organic Waste Ecosystem</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="hidden xl:flex items-center gap-1 bg-emerald-50/50 p-1 rounded-xl border border-emerald-100">
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="nav-btn px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 bg-emerald-600 text-white shadow-sm">
+                    Dashboard
+                </button>
+                <button onclick="switchTab('smartgotplace')" id="btn-smartgotplace" class="nav-btn px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-slate-600 hover:text-emerald-700">
+                    Smartgotplace
+                </button>
+                <button onclick="switchTab('manggot-collect')" id="btn-manggot-collect" class="nav-btn px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-slate-600 hover:text-emerald-700">
+                    Manggot Collect
+                </button>
+                <button onclick="switchTab('academy')" id="btn-academy" class="nav-btn px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-slate-600 hover:text-emerald-700">
+                    ManggotiX Academy
+                </button>
+                <button onclick="switchTab('supply-chain')" id="btn-supply-chain" class="nav-btn px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-slate-600 hover:text-emerald-700">
+                    Supply Chain & Drop Points
+                </button>
+                <button onclick="switchTab('python-simulator')" id="btn-python-simulator" class="nav-btn px-3 py-2 rounded-lg text-xs font-bold transition-all duration-200 text-slate-600 hover:text-emerald-700">
+                    Python Engine
+                </button>
+            </nav>
+
+            <!-- User Profile & Status -->
+            <div class="flex items-center gap-3">
+                <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-full border border-emerald-200">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Komunitas Lestari
+                </span>
+                <div class="flex items-center gap-2 border-l pl-3 border-emerald-100">
+                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-emerald-400 to-teal-500 text-white font-bold flex items-center justify-center text-sm shadow-md shadow-emerald-100">
+                        BN
+                    </div>
+                    <div class="hidden lg:block text-left">
+                        <p class="text-xs font-bold text-slate-900">Bu Nabilla</p>
+                        <p class="text-[10px] text-emerald-600 font-semibold">Tani Lestari Malang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE NAVIGATION (Sticky Bottom) -->
+    <div class="xl:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-emerald-100 px-2 py-2 z-50 flex justify-around shadow-lg">
+        <button onclick="switchTab('dashboard')" class="mobile-nav-btn flex flex-col items-center text-emerald-600" id="m-btn-dashboard">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span class="text-[9px] font-bold mt-1">Home</span>
+        </button>
+        <button onclick="switchTab('smartgotplace')" class="mobile-nav-btn flex flex-col items-center text-slate-400" id="m-btn-smartgotplace">
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <span class="text-[9px] font-bold mt-1">Market</span>
+        </button>
+        <button onclick="switchTab('manggot-collect')" class="mobile-nav-btn flex flex-col items-center text-slate-400" id="m-btn-manggot-collect">
+            <i data-lucide="truck" class="w-4 h-4"></i>
+            <span class="text-[9px] font-bold mt-1">Collect</span>
+        </button>
+        <button onclick="switchTab('academy')" class="mobile-nav-btn flex flex-col items-center text-slate-400" id="m-btn-academy">
+            <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+            <span class="text-[9px] font-bold mt-1">Academy</span>
+        </button>
+        <button onclick="switchTab('supply-chain')" class="mobile-nav-btn flex flex-col items-center text-slate-400" id="m-btn-supply-chain">
+            <i data-lucide="route" class="w-4 h-4"></i>
+            <span class="text-[9px] font-bold mt-1">Track</span>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 xl:pb-8">
+
+        <!-- HEADER HERO -->
+        <div class="mb-8 bg-gradient-to-r from-emerald-800 via-emerald-900 to-teal-950 text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden">
+            <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-emerald-500/20 rounded-full blur-2xl"></div>
+            <div class="absolute -left-16 -top-16 w-64 h-64 bg-mint-400/10 rounded-full blur-2xl"></div>
+            
+            <div class="relative z-10 max-w-4xl">
+                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold rounded-full uppercase tracking-wider border border-emerald-500/30">
+                    Mewujudkan Zero Organic Waste & Ekonomi Sirkular
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold mt-3 tracking-tight leading-tight">
+                    Sistem Digital Integrasi BSF Berbasis Pemberdayaan
+                </h2>
+                <p class="text-emerald-100/90 mt-2 text-xs sm:text-sm font-light max-w-2xl leading-relaxed">
+                    Ubah sampah organik kota menjadi pakan protein bermutu tinggi, lacak rantai pasok Anda secara transparan, jalankan sensor monitoring otomatis untuk cegah gagal panen, dan diagnosa hama penyakit menggunakan AI terintegrasi.
+                </p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button onclick="switchTab('smartgotplace')" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-xs rounded-xl transition shadow-md shadow-emerald-600/20 flex items-center gap-2">
+                        <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+                        Akses Smartgotplace
+                    </button>
+                    <button onclick="switchTab('manggot-collect')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl transition border border-white/20 flex items-center gap-2">
+                        <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+                        Pesan Manggot Collect
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB: DASHBOARD ================= -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            
+            <!-- REAL-TIME TELEMETRY SENSOR & AUTOMATION WARNING PANEL -->
+            <div class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm glow-emerald">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                            <h4 class="font-bold text-slate-800 text-sm flex items-center gap-1.5">
+                                <i data-lucide="cpu" class="w-4 h-4 text-emerald-600"></i> Monitoring Sensor IoT Biopond Alpha (Real-Time 24/7)
+                            </h4>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Data dikirim langsung oleh mikrokontroler sensor di kandang Tani Lestari Malang.</p>
+                    </div>
+                    <!-- Controls to test/simulate sensor variables -->
+                    <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-emerald-50">
+                        <span class="text-[10px] font-bold text-slate-500">Uji Batas Suhu:</span>
+                        <button onclick="adjustSimulatedTemp(-1)" class="px-2 py-1 bg-rose-500 text-white text-[10px] font-bold rounded-lg hover:bg-rose-600">-1°C</button>
+                        <button onclick="adjustSimulatedTemp(1)" class="px-2 py-1 bg-emerald-600 text-white text-[10px] font-bold rounded-lg hover:bg-emerald-700">+1°C</button>
+                        <button onclick="resetSimulatedSensors()" class="px-2 py-1 bg-slate-200 text-slate-700 text-[10px] font-bold rounded-lg hover:bg-slate-300">Reset</button>
+                    </div>
+                </div>
+
+                <!-- Warning Banner Placeholder -->
+                <div id="iot-warning-banner" class="hidden mb-5 p-4 bg-rose-50 border border-rose-100 rounded-2xl animate-pulse flex items-start gap-3">
+                    <div class="p-2 bg-rose-500 text-white rounded-xl">
+                        <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                    </div>
+                    <div class="text-xs">
+                        <p class="font-bold text-rose-800">Suhu Kritis Terdeteksi (&lt; 33°C)</p>
+                        <p class="text-rose-600 mt-0.5">Sistem Peringatan Aktif: Mengirimkan sinyal otomatis menyalakan <strong class="underline">Exhaust Fan</strong> dan memicu heater guna menjaga kestabilan larva serta mencegah gagal panen!</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Sensor 1: Suhu -->
+                    <div class="p-4 rounded-2xl border transition duration-300" id="sensor-temp-card">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Suhu Biopond</span>
+                            <span class="px-2 py-0.5 text-[9px] font-bold rounded-full" id="sensor-temp-status">Normal</span>
+                        </div>
+                        <div class="flex items-baseline gap-1 mt-2">
+                            <h5 class="text-2xl font-extrabold text-slate-800" id="sensor-temp-val">34.2</h5>
+                            <span class="text-xs text-slate-400 font-bold">°C</span>
+                        </div>
+                        <div class="mt-3 text-[10px] text-slate-400 flex items-center gap-1">
+                            <i data-lucide="thermometer" class="w-3 h-3"></i> Optimal: 33°C - 36°C
+                        </div>
+                    </div>
+
+                    <!-- Sensor 2: Kelembapan -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-emerald-50/80" id="sensor-humidity-card">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Kelembapan</span>
+                            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-full">Optimal</span>
+                        </div>
+                        <div class="flex items-baseline gap-1 mt-2">
+                            <h5 class="text-2xl font-extrabold text-slate-800" id="sensor-humidity-val">68.4</h5>
+                            <span class="text-xs text-slate-400 font-bold">% RH</span>
+                        </div>
+                        <div class="mt-3 text-[10px] text-slate-400 flex items-center gap-1">
+                            <i data-lucide="droplets" class="w-3 h-3"></i> Optimal: 60% - 75% RH
+                        </div>
+                    </div>
+
+                    <!-- Sensor 3: Gas Amonia -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-emerald-50/80" id="sensor-ammonia-card">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Kadar Gas Amonia</span>
+                            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-full">Aman</span>
+                        </div>
+                        <div class="flex items-baseline gap-1 mt-2">
+                            <h5 class="text-2xl font-extrabold text-slate-800" id="sensor-ammonia-val">4.2</h5>
+                            <span class="text-xs text-slate-400 font-bold">ppm</span>
+                        </div>
+                        <div class="mt-3 text-[10px] text-slate-400 flex items-center gap-1">
+                            <i data-lucide="wind" class="w-3 h-3"></i> Batas Toleransi: &lt; 10 ppm
+                        </div>
+                    </div>
+
+                    <!-- Sensor 4: pH Pakan -->
+                    <div class="bg-slate-50/50 p-4 rounded-2xl border border-emerald-50/80">
+                        <div class="flex justify-between items-start">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">pH Media Pakan</span>
+                            <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-full">Stabil</span>
+                        </div>
+                        <div class="flex items-baseline gap-1 mt-2">
+                            <h5 class="text-2xl font-extrabold text-slate-800" id="sensor-ph-val">6.4</h5>
+                            <span class="text-xs text-slate-400 font-bold">pH</span>
+                        </div>
+                        <div class="mt-3 text-[10px] text-slate-400 flex items-center gap-1">
+                            <i data-lucide="filter" class="w-3 h-3"></i> Optimal: 6.0 - 7.5 pH
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actuator Status Controls -->
+                <div class="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 text-xs font-semibold text-slate-600">
+                        <span>Aktuator Fan:</span>
+                        <span id="actuator-fan-badge" class="px-3 py-1 bg-slate-100 text-slate-500 rounded-full flex items-center gap-1 font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> MATI (Sistem Siaga)
+                        </span>
+                    </div>
+                    <div class="text-[10px] text-slate-400 flex items-center gap-1">
+                        <i data-lucide="info" class="w-3.5 h-3.5 text-emerald-500"></i> Sistem kelistrikan relai otomatis mencegah stres larva akibat hawa dingin Malang yang tiba-tiba.
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS CARDS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm flex items-center gap-4 glow-emerald">
+                    <div class="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
+                        <i data-lucide="trash-2" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Sampah Terolah</p>
+                        <h3 class="text-xl font-extrabold text-slate-800 mt-0.5" id="dash-waste">1,420 Kg</h3>
+                        <p class="text-[10px] text-emerald-600 font-bold mt-1 flex items-center gap-0.5">
+                            <i data-lucide="trending-up" class="w-3 h-3"></i> +12% minggu ini
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm flex items-center gap-4 glow-emerald">
+                    <div class="p-3 bg-teal-50 text-teal-600 rounded-xl">
+                        <i data-lucide="sparkles" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Panen Maggot</p>
+                        <h3 class="text-xl font-extrabold text-slate-800 mt-0.5" id="dash-maggot">284 Kg</h3>
+                        <p class="text-[10px] text-teal-600 font-semibold mt-1">Konversi Rasio 1:5</p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm flex items-center gap-4 glow-emerald">
+                    <div class="p-3 bg-emerald-50 text-emerald-700 rounded-xl">
+                        <i data-lucide="leaf" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Karbondioksida Terreduksi</p>
+                        <h3 class="text-xl font-extrabold text-slate-800 mt-0.5" id="dash-co2">3,550 Kg</h3>
+                        <p class="text-[10px] text-emerald-500 font-semibold mt-1 flex items-center gap-1">
+                            <i data-lucide="globe" class="w-3 h-3"></i> Penyelamatan Emisi Gas Rumah Kaca
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm flex items-center gap-4 glow-emerald">
+                    <div class="p-3 bg-amber-50 text-amber-600 rounded-xl">
+                        <i data-lucide="wallet" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Estimasi Omset</p>
+                        <h3 class="text-xl font-extrabold text-slate-800 mt-0.5" id="dash-revenue">Rp 3,408,000</h3>
+                        <p class="text-[10px] text-amber-600 font-bold mt-1">Penjualan Larva & Frass</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS CHART & INTEGRATION QUICK LOGGER -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Chart -->
+                <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm lg:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">Grafik Dampak Lingkungan & Panen</h4>
+                            <p class="text-xs text-slate-400">Hubungan konversi sampah organik perkotaan dengan panen biomassa.</p>
+                        </div>
+                    </div>
+                    <div class="h-[250px] relative">
+                        <canvas id="dashboardChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Logger Card -->
+                <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                            <i data-lucide="file-text" class="text-emerald-600 w-4 h-4"></i> Catat Log Biopond Harian
+                        </h4>
+                        <p class="text-xs text-slate-400 mt-1 mb-4">Tambahkan data penimbangan pakan sampah organik dan hasil panen larva.</p>
+                        
+                        <form id="logger-form" onsubmit="submitLog(event)" class="space-y-3">
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase">Cluster Biopond</label>
+                                <select id="log-cluster" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none">
+                                    <option value="Biopond Alpha">Biopond Alpha - Ruang Larva Utama</option>
+                                    <option value="Biopond Beta">Biopond Beta - Pembibitan Prepupa</option>
+                                    <option value="Biopond Gamma">Biopond Gamma - Skala Mikro</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase">Sampah Masuk (Kg)</label>
+                                    <input type="number" step="any" required id="log-waste-weight" placeholder="0" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase">Panen Larva (Kg)</label>
+                                    <input type="number" step="any" required id="log-maggot-weight" placeholder="0" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none">
+                                </div>
+                            </div>
+                            <button type="submit" class="w-full mt-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition shadow-md shadow-emerald-100 flex items-center justify-center gap-1.5">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Catat & Perbarui Dashboard
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIWAYAT LOG -->
+            <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm">
+                <h4 class="font-bold text-slate-800 text-sm mb-4">Riwayat Konversi Komunitas Terkini</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-emerald-50 text-slate-400 font-bold uppercase tracking-wider">
+                                <th class="pb-2">Waktu Catat</th>
+                                <th class="pb-2">Cluster</th>
+                                <th class="pb-2 text-right">Limbah Terurai</th>
+                                <th class="pb-2 text-right">Hasil Larva</th>
+                                <th class="pb-2 text-center">Status Traceability</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboard-table" class="divide-y divide-emerald-50/50">
+                            <tr>
+                                <td class="py-2 text-slate-500">29 Mei 2026</td>
+                                <td class="py-2 font-semibold text-emerald-800">Biopond Alpha</td>
+                                <td class="py-2 text-right font-medium">45 Kg</td>
+                                <td class="py-2 text-right font-bold text-emerald-600">9.0 Kg</td>
+                                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-bold rounded-full">Selesai Konversi</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 text-slate-500">28 Mei 2026</td>
+                                <td class="py-2 font-semibold text-emerald-800">Biopond Beta</td>
+                                <td class="py-2 text-right font-medium">35 Kg</td>
+                                <td class="py-2 text-right font-bold text-emerald-600">7.2 Kg</td>
+                                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-bold rounded-full">Selesai Konversi</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ================= TAB: SMARTGOTPLACE ================= -->
+        <section id="tab-smartgotplace" class="tab-content hidden space-y-6">
+            <div class="flex flex-col lg:flex-row gap-6">
+                
+                <!-- Market Listings -->
+                <div class="lg:w-2/3 space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                        <div>
+                            <h3 class="font-extrabold text-slate-800 text-lg">Smartgotplace</h3>
+                            <p class="text-xs text-slate-400">Jual & beli produk BSF terstandardisasi.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="text" placeholder="Cari maggot, frass, prepupa..." class="bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none w-48">
+                            <button class="bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-2 rounded-xl text-xs font-bold flex items-center gap-1">
+                                <i data-lucide="filter" class="w-3.5 h-3.5"></i> Filter
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- Prod 1 -->
+                        <div class="bg-white p-4 rounded-2xl border border-emerald-50 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                            <div>
+                                <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">PREMIUM DRY</span>
+                                <h4 class="font-bold text-slate-800 text-sm mt-2">Dried Maggot Protein 45%</h4>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Maggot kering oven kering merata sempurna tanpa bakteri patogen berbahaya. Sangat disukai ikan hias & unggas.</p>
+                                <p class="text-xs font-bold text-slate-900 mt-3">Rp 45.000 <span class="text-[10px] text-slate-400 font-normal">/ Kg</span></p>
+                            </div>
+                            <button onclick="buyProduct('Dried Maggot Protein 45%', 'Rp 45.000')" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-50">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i> Hubungi Peternak
+                            </button>
+                        </div>
+
+                        <!-- Prod 2 -->
+                        <div class="bg-white p-4 rounded-2xl border border-emerald-50 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                            <div>
+                                <span class="bg-teal-100 text-teal-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">FRESH YIELD</span>
+                                <h4 class="font-bold text-slate-800 text-sm mt-2">Maggot Basah Segar Organik</h4>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Larva BSF hidup aktif. Dipanen setelah siklus makan sampah organik harian terkontrol.</p>
+                                <p class="text-xs font-bold text-slate-900 mt-3">Rp 12.000 <span class="text-[10px] text-slate-400 font-normal">/ Kg</span></p>
+                            </div>
+                            <button onclick="buyProduct('Maggot Basah Segar Organik', 'Rp 12.000')" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-50">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i> Hubungi Peternak
+                            </button>
+                        </div>
+
+                        <!-- Prod 3 -->
+                        <div class="bg-white p-4 rounded-2xl border border-emerald-50 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                            <div>
+                                <span class="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">FRASS ORGANIC</span>
+                                <h4 class="font-bold text-slate-800 text-sm mt-2">Pupuk Frass BSF Murni</h4>
+                                <p class="text-xs text-slate-400 mt-1 line-clamp-2">Sisa dekomposisi pakan pupuk berkualitas tinggi. Kaya unsur hara N-P-K esensial.</p>
+                                <p class="text-xs font-bold text-slate-900 mt-3">Rp 30.000 <span class="text-[10px] text-slate-400 font-normal">/ 10 Kg</span></p>
+                            </div>
+                            <button onclick="buyProduct('Pupuk Frass BSF Murni', 'Rp 30.000')" class="w-full mt-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm shadow-emerald-50">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i> Hubungi Peternak
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Analysis Side -->
+                <div class="lg:w-1/3 space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm">
+                        <h4 class="font-bold text-slate-800 text-sm mb-3">Tren Harga Pasar Komunitas</h4>
+                        <p class="text-xs text-slate-400 mb-4">Informasi harga rata-rata komoditas BSF di tingkat nasional minggu ini.</p>
+                        
+                        <div class="space-y-3 text-xs">
+                            <div class="flex items-center justify-between p-2.5 bg-emerald-50/30 rounded-xl">
+                                <span class="font-semibold text-slate-700">Maggot Kering (Dried)</span>
+                                <div class="text-right">
+                                    <p class="font-bold text-emerald-700">Rp 45.000/Kg</p>
+                                    <p class="text-[10px] text-emerald-600 font-bold flex items-center justify-end gap-0.5">
+                                        <i data-lucide="arrow-up-right" class="w-3 h-3"></i> +3.4%
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between p-2.5 bg-emerald-50/30 rounded-xl">
+                                <span class="font-semibold text-slate-700">Maggot Basah (Fresh)</span>
+                                <div class="text-right">
+                                    <p class="font-bold text-slate-800">Rp 12.000/Kg</p>
+                                    <p class="text-[10px] text-slate-400 font-bold flex items-center justify-end gap-0.5">
+                                        Stagnan
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= TAB: MANGGOT COLLECT ================= -->
+        <section id="tab-manggot-collect" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Request Form -->
+                <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm space-y-4">
+                    <div>
+                        <h3 class="font-extrabold text-slate-800 text-lg flex items-center gap-2">
+                            <i data-lucide="truck" class="text-emerald-600"></i> Manggot Collect
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Jadwalkan pengiriman sampah organik dari tempat Anda atau jemput hasil panen maggot untuk langsung dijual ke pabrik.</p>
+                    </div>
+
+                    <form id="collect-form" onsubmit="scheduleCollect(event)" class="space-y-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Tipe Penjemputan</label>
+                            <div class="grid grid-cols-2 gap-2 mt-1">
+                                <label class="border-2 border-emerald-500 rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition text-xs font-semibold" id="label-collect-waste">
+                                    <input type="radio" name="collect-type" value="Limbah Organik" checked class="hidden" onclick="toggleCollectType('waste')">
+                                    <i data-lucide="trash-2" class="w-5 h-5 text-emerald-600 mb-1"></i>
+                                    Setor Limbah
+                                </label>
+                                <label class="border-2 border-slate-100 hover:border-emerald-500 rounded-xl p-3 flex flex-col items-center justify-center cursor-pointer transition text-xs font-semibold" id="label-collect-maggot">
+                                    <input type="radio" name="collect-type" value="Hasil Panen Maggot" class="hidden" onclick="toggleCollectType('maggot')">
+                                    <i data-lucide="sparkles" class="w-5 h-5 text-emerald-600 mb-1"></i>
+                                    Jual Hasil Panen
+                                </label>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Estimasi Berat (Kg)</label>
+                            <input type="number" required id="collect-weight" placeholder="Masukkan angka..." class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none">
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Lokasi Penjemputan</label>
+                            <textarea required id="collect-address" placeholder="Tulis alamat penjemputan lengkap..." rows="2" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Jadwal Tanggal</label>
+                            <input type="date" required id="collect-date" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none">
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition shadow-md shadow-emerald-50 flex items-center justify-center gap-1.5">
+                            <i data-lucide="calendar" class="w-4 h-4"></i> Buat Jadwal Logistik
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Active Schedule Tracking -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm">
+                        <h4 class="font-bold text-slate-800 text-sm mb-4">Pelacakan Logistik Logistik Aktif</h4>
+                        
+                        <div class="space-y-4" id="collect-schedule-list">
+                            <!-- Active tracking card -->
+                            <div class="p-4 bg-emerald-50/20 rounded-2xl border border-emerald-100/50 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full text-[9px] uppercase tracking-wider">LOGISTIK AKTIF</span>
+                                        <h5 class="font-bold text-slate-800 text-xs mt-1">Order #MC-2849 - Setor Limbah Organik</h5>
+                                    </div>
+                                    <span class="text-xs font-bold text-emerald-600">Kurir Menuju Lokasi</span>
+                                </div>
+                                <div class="grid grid-cols-3 gap-1.5 text-center text-[10px] font-semibold text-slate-500 pt-2 border-t border-emerald-100/30">
+                                    <div class="bg-white p-2 rounded-xl">
+                                        <p class="text-slate-400">Berat</p>
+                                        <p class="font-bold text-slate-800 mt-0.5">120 Kg</p>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-xl">
+                                        <p class="text-slate-400">Jadwal</p>
+                                        <p class="font-bold text-slate-800 mt-0.5">30 Mei 2026</p>
+                                    </div>
+                                    <div class="bg-white p-2 rounded-xl">
+                                        <p class="text-slate-400">Kurir</p>
+                                        <p class="font-bold text-emerald-600 mt-0.5">Pak Joko</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= TAB: ACADEMY ================= -->
+        <section id="tab-academy" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Lesson Materials -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm">
+                        <h3 class="font-extrabold text-slate-800 text-lg flex items-center gap-2">
+                            <i data-lucide="graduation-cap" class="text-emerald-600"></i> ManggotiX Academy & Pakar Diagnosa AI
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-0.5">Tingkatkan produktivitas biokonversi sampah organik dengan panduan edukasi berbasis sains dan teknologi kecerdasan buatan.</p>
+                    </div>
+
+                    <!-- PAKAR MAGGOT AI DIAGNOSTIC CENTER -->
+                    <div class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="bg-emerald-600 text-white p-1.5 rounded-lg animate-bounce">
+                                    <i data-lucide="bot" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800 text-sm">Pakar Maggot AI (Klinik Diagnosa Instan)</h4>
+                                    <p class="text-[10px] text-slate-400 font-medium">Tanyakan keluhan atau kirim foto biopond Anda untuk diagnosa instan oleh kecerdasan buatan.</p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full">Gemini 3.1 Flash Powered</span>
+                        </div>
+
+                        <!-- Chat & Diagnosa Panel -->
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                            
+                            <!-- Left: Chat log container -->
+                            <div class="md:col-span-8 flex flex-col justify-between border border-emerald-50 rounded-2xl overflow-hidden bg-slate-50/50 h-[380px]">
+                                <div id="ai-chat-history" class="p-4 space-y-3 overflow-y-auto flex-grow text-xs leading-relaxed">
+                                    <!-- Welcome Msg -->
+                                    <div class="flex gap-2.5 items-start">
+                                        <div class="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[10px]">AI</div>
+                                        <div class="bg-white border border-emerald-50 p-3 rounded-2xl shadow-sm max-w-[85%]">
+                                            <p class="font-bold text-emerald-800 text-[10px] mb-0.5">Pakar Maggot AI</p>
+                                            Halo Bu Nabilla! Saya asisten pintar budidaya BSF Anda. Apakah ada kendala di biopond Anda di Malang hari ini? Silakan ketik pertanyaan Anda atau klik simulasi deteksi di sebelah kanan!
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Loading feedback state -->
+                                <div id="ai-loading-state" class="hidden px-4 py-2 bg-emerald-50/50 border-t border-emerald-100 text-[10px] text-emerald-800 flex items-center gap-2">
+                                    <div class="w-3 h-3 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+                                    <span>Pakar AI sedang mendiagnosis foto & memformulasikan rekomendasi...</span>
+                                </div>
+
+                                <!-- Input Box -->
+                                <form onsubmit="handleAIChatSubmit(event)" class="p-3 bg-white border-t border-emerald-50 flex items-center gap-2">
+                                    <input type="text" id="ai-prompt-input" placeholder="Tulis keluhan atau pertanyaan budidaya..." class="flex-grow bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none">
+                                    <button type="submit" class="p-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-50 transition">
+                                        <i data-lucide="send" class="w-4 h-4"></i>
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Right: Image Diagnostic / Fast Simulator Options -->
+                            <div class="md:col-span-4 bg-slate-50/80 p-4 rounded-2xl border border-emerald-50 flex flex-col justify-between space-y-4 text-xs">
+                                <div>
+                                    <h5 class="font-bold text-slate-700 flex items-center gap-1 mb-1.5">
+                                        <i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-600"></i> Diagnosis Gambar
+                                    </h5>
+                                    <p class="text-[10px] text-slate-400 mb-3">Unggah foto biopond Anda untuk dianalisis oleh AI atau gunakan salah satu preset uji coba di bawah ini.</p>
+                                    
+                                    <!-- Presets simulation buttons -->
+                                    <div class="space-y-2 mb-3">
+                                        <button onclick="simulateAIDiagnostic('maggot_hitam')" class="w-full p-2.5 bg-white border border-rose-100 hover:border-rose-400 rounded-xl text-left hover:bg-rose-50/50 transition flex items-center gap-2">
+                                            <span class="w-4 h-4 rounded bg-rose-200 flex items-center justify-center text-[10px]">🐛</span>
+                                            <div class="leading-tight">
+                                                <p class="font-semibold text-slate-800 text-[10px]">Uji: Maggot Tiba-tiba Hitam</p>
+                                                <p class="text-[9px] text-slate-400 font-medium">Kirim foto & diagnosis jamur</p>
+                                            </div>
+                                        </button>
+                                        <button onclick="simulateAIDiagnostic('pupa_gagal')" class="w-full p-2.5 bg-white border border-slate-200 hover:border-emerald-400 rounded-xl text-left hover:bg-emerald-50/50 transition flex items-center gap-2">
+                                            <span class="w-4 h-4 rounded bg-slate-200 flex items-center justify-center text-[10px]">🍂</span>
+                                            <div class="leading-tight">
+                                                <p class="font-semibold text-slate-800 text-[10px]">Uji: Pupa Tidak Menetas</p>
+                                                <p class="text-[9px] text-slate-400 font-medium">Deteksi media kering/suhu salah</p>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <!-- Real Image File Input support -->
+                                    <div class="mt-2">
+                                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Unggah Foto Mandiri</label>
+                                        <input type="file" id="ai-image-upload" accept="image/*" class="w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:text-[10px] file:font-semibold file:bg-emerald-100 file:text-emerald-700 hover:file:bg-emerald-200 cursor-pointer">
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-100/50">
+                                    <p class="font-semibold text-emerald-800 text-[10px] flex items-center gap-1">
+                                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600 animate-pulse"></i> Tips Penanganan Cepat
+                                    </p>
+                                    <p class="text-[9px] text-slate-500 mt-1 leading-relaxed">Jika terdeteksi jamur akibat kelembapan tinggi, segera kurangi siraman pakan basah dan taburkan kapur dolomit secukupnya untuk menyeimbangkan pH biopond.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Quiz & Certificate Generator Side (CREDIBLE CASE STUDIES) -->
+                <div class="lg:col-span-5 space-y-6 flex flex-col">
+                    <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm flex-grow flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between text-emerald-600 mb-3">
+                                <div class="flex items-center gap-2">
+                                    <i data-lucide="award" class="w-5 h-5"></i>
+                                    <h4 class="font-bold text-slate-800 text-sm">Sertifikasi Kredibilitas BSF</h4>
+                                </div>
+                                <span id="quiz-step-indicator" class="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-bold">1 / 15</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mb-4">Uji kredibilitas pengelolaan limbah sirkular dengan memecahkan 15 studi kasus biologi & teknis lapangan BSF.</p>
+
+                            <!-- Progress Bar -->
+                            <div class="w-full bg-slate-100 h-1.5 rounded-full mb-5 overflow-hidden">
+                                <div id="quiz-progress-bar" class="bg-emerald-500 h-1.5 w-1/15 transition-all duration-300"></div>
+                            </div>
+
+                            <!-- Quiz Widget -->
+                            <div id="quiz-wrapper" class="space-y-4 text-xs">
+                                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 font-bold text-slate-800 leading-relaxed" id="academy-quiz-question">
+                                    Loading Pertanyaan...
+                                </div>
+                                
+                                <div id="academy-quiz-options" class="space-y-2">
+                                    <!-- Dynamic Options Go Here -->
+                                </div>
+                            </div>
+
+                            <!-- Biodata Form Panel (Appears after passing score) -->
+                            <div id="quiz-biodata-form" class="hidden space-y-3 pt-2">
+                                <div class="bg-emerald-50 border border-emerald-100 p-3 rounded-xl mb-3">
+                                    <p class="text-xs font-bold text-emerald-800 flex items-center gap-1">
+                                        <i data-lucide="check-circle" class="w-4 h-4"></i> Selamat! Anda Lulus Sertifikasi (Skor: <span id="passed-score-lbl">100</span>%)
+                                    </p>
+                                    <p class="text-[10px] text-slate-600 mt-1">Lengkapi biodata resmi Anda untuk menerbitkan sertifikat digital terverifikasi dari Tani Lestari Malang.</p>
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Nama Lengkap (Tanpa Gelar)</label>
+                                    <input type="text" id="cert-fullname" placeholder="Contoh: Bu Nabilla" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Instansi / Kelompok Tani</label>
+                                    <input type="text" id="cert-instansi" placeholder="Contoh: Tani Lestari Malang" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase">Kabupaten / Kota Tempat Budidaya</label>
+                                    <input type="text" id="cert-city" placeholder="Contoh: Malang" class="w-full mt-1 bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs focus:ring-1 focus:ring-emerald-500 outline-none">
+                                </div>
+                                <button onclick="generateOfficialCertificate()" class="w-full mt-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition shadow-md shadow-emerald-50 flex items-center justify-center gap-1">
+                                    <i data-lucide="award" class="w-4 h-4"></i> Terbitkan Sertifikat Saya
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Reset & Restart Actions -->
+                        <div id="quiz-controls" class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs hidden">
+                            <button onclick="resetAcademyQuiz()" class="text-slate-400 hover:text-rose-500 font-bold transition flex items-center gap-1">
+                                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Ulangi Ujian Kredibilitas
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- DIGITAL CERTIFICATE MODAL PREVIEW -->
+            <div id="cert-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+                <div class="bg-white p-6 sm:p-8 rounded-3xl max-w-2xl w-full shadow-2xl relative overflow-hidden flex flex-col items-center">
+                    <!-- Elegant Background elements for official touch -->
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-100/30 rounded-full blur-xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-teal-100/30 rounded-full blur-xl"></div>
+                    
+                    <!-- Certificate Frame border -->
+                    <div class="border-4 border-double border-emerald-600 p-6 sm:p-8 w-full text-center relative bg-stone-50/50 rounded-2xl">
+                        <!-- Top header -->
+                        <div class="flex flex-col items-center gap-1">
+                            <div class="p-2 bg-emerald-600 text-white rounded-full">
+                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            </div>
+                            <p class="text-[9px] font-bold text-emerald-800 tracking-widest uppercase mt-2">ManggotiX Digital Academy</p>
+                            <h4 class="text-xl sm:text-2xl font-serif font-extrabold text-slate-800 mt-1">SERTIFIKAT KOMPETENSI</h4>
+                            <div class="w-24 h-0.5 bg-emerald-600 my-2"></div>
+                        </div>
+
+                        <p class="text-xs text-slate-500 mt-2 font-medium">Sertifikat ini secara resmi diberikan kepada:</p>
+                        <h5 id="cert-recipient-name" class="text-lg sm:text-2xl font-serif font-extrabold text-emerald-700 my-3 tracking-wide">BU NABILLA</h5>
+                        
+                        <p class="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
+                            Atas keberhasilan menyelesaikan seluruh kurikulum **Standardisasi Pengelolaan Larva BSF & Sirkularitas Zero Organic Waste** dengan predikat kelulusan kompeten.
+                        </p>
+
+                        <!-- Institution details -->
+                        <div class="grid grid-cols-2 gap-4 mt-6 text-left border-t border-slate-200/80 pt-4">
+                            <div class="text-[10px] text-slate-500">
+                                <p>Afiliasi: <strong id="cert-recipient-instansi" class="text-slate-700">Tani Lestari Malang</strong></p>
+                                <p>Lokasi: <strong id="cert-recipient-city" class="text-slate-700">Malang</strong></p>
+                            </div>
+                            <div class="text-[10px] text-slate-500 text-right">
+                                <p>Tanggal Terbit: <strong class="text-slate-700">10 Juni 2026</strong></p>
+                                <p>Verified License: <strong id="cert-verified-id" class="text-emerald-700 font-mono">CERT-BSF-28391</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- Stamp Badge SVG -->
+                        <div class="absolute bottom-6 right-6 opacity-30 sm:opacity-80">
+                            <svg class="w-16 h-16 text-amber-500" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="4"/>
+                                <path d="M50 20 L60 45 L85 45 L65 60 L75 85 L50 70 L25 85 L35 60 L15 45 L40 45 Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 w-full mt-6">
+                        <button onclick="closeCertModal()" class="w-1/2 py-2.5 bg-slate-100 text-slate-700 font-bold text-xs rounded-xl hover:bg-slate-200 transition">Tutup Pratinjau</button>
+                        <button onclick="window.print()" class="w-1/2 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition shadow-md shadow-emerald-600/10 flex items-center justify-center gap-1.5">
+                            <i data-lucide="printer" class="w-4 h-4"></i> Cetak Sertifikat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB: SUPPLY CHAIN ================= -->
+        <section id="tab-supply-chain" class="tab-content hidden space-y-6">
+            <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="font-extrabold text-slate-800 text-lg flex items-center gap-2">
+                        <i data-lucide="route" class="text-emerald-600"></i> ManggotiX Supply Chain, AI Price Analysis & Drop Points
+                    </h3>
+                    <p class="text-xs text-slate-400 mt-0.5">Sistem pelacakan transparan asal-usul pakan organik dari hulu ke hilir untuk jaminan kualitas mutu komoditas sirkular BSF.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-slate-500">Pilih Batch ID:</span>
+                    <select id="supply-batch-selector" onchange="updateSupplyChainChain()" class="bg-slate-50 border border-emerald-100 rounded-xl px-3 py-2 text-xs font-bold focus:ring-1 focus:ring-emerald-500 outline-none">
+                        <option value="BATCH-BSF-029">BATCH-BSF-029 (Pasar Caringin)</option>
+                        <option value="BATCH-BSF-030">BATCH-BSF-030 (Restoran Lestari)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- AI PRICE ANALYSIS & RECOMMENDATION WIDGET -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Left: Pricing Dashboard & AI Advice -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-emerald-50">
+                        <div class="flex items-center gap-2">
+                            <div class="p-1.5 bg-emerald-600 text-white rounded-lg animate-pulse">
+                                <i data-lucide="trending-up" class="w-4 h-4"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm">Analisis Harga Pasar AI & Rekomendasi Jual</h4>
+                        </div>
+                        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-full">Gemini Powered</span>
+                    </div>
+
+                    <!-- Market Price Trends widgets -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="p-3 bg-stone-50 rounded-xl border border-emerald-50">
+                            <span class="text-[9px] font-semibold text-slate-400 block uppercase">Maggot Kering</span>
+                            <span class="text-sm font-bold text-slate-800 block mt-1">Rp 45.000<span class="text-[9px] font-normal text-slate-400">/Kg</span></span>
+                            <span class="text-[9px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
+                                <i data-lucide="arrow-up-right" class="w-3 h-3"></i> +3.4% naik
+                            </span>
+                        </div>
+                        <div class="p-3 bg-stone-50 rounded-xl border border-emerald-50">
+                            <span class="text-[9px] font-semibold text-slate-400 block uppercase">Maggot Basah</span>
+                            <span class="text-sm font-bold text-slate-800 block mt-1">Rp 12.000<span class="text-[9px] font-normal text-slate-400">/Kg</span></span>
+                            <span class="text-[9px] text-amber-600 font-bold flex items-center gap-0.5 mt-1">
+                                <i data-lucide="minus" class="w-3 h-3"></i> Stabil
+                            </span>
+                        </div>
+                        <div class="p-3 bg-stone-50 rounded-xl border border-emerald-50">
+                            <span class="text-[9px] font-semibold text-slate-400 block uppercase">Frass (Pupuk)</span>
+                            <span class="text-sm font-bold text-slate-800 block mt-1">Rp 3.000<span class="text-[9px] font-normal text-slate-400">/Kg</span></span>
+                            <span class="text-[9px] text-emerald-600 font-bold flex items-center gap-0.5 mt-1">
+                                <i data-lucide="arrow-up-right" class="w-3 h-3"></i> +5.1% naik
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- AI recommendation output container -->
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100/80 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <p class="font-bold text-emerald-800 text-xs flex items-center gap-1">
+                                <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600 animate-bounce"></i> Analisis Rekomendasi AI Terkini
+                            </p>
+                            <button onclick="fetchPriceAnalysisAI()" class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1">
+                                <i data-lucide="refresh-cw" class="w-3 h-3"></i> Perbarui Analisis
+                            </button>
+                        </div>
+                        <p id="ai-price-recommendation-text" class="text-xs text-slate-600 leading-relaxed">
+                            Klik **'Perbarui Analisis'** untuk menyusun prakiraan harga real-time berbasis data kualitatif pakan unggas nasional dan menentukan momen pelepasan stok terbaik untuk Tani Lestari Malang.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right: Drop Points Collaboration / circular Loop -->
+                <div class="lg:col-span-5 bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-4">
+                    <div class="pb-3 border-b border-emerald-50">
+                        <div class="flex items-center gap-2">
+                            <div class="p-1.5 bg-amber-500 text-white rounded-lg">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm">Drop Points & Kolaborasi Sirkular</h4>
+                        </div>
+                        <p class="text-[10px] text-slate-400 mt-1">Sisa nasi restoran diubah jadi protein maggot. 20% maggot siap panen dikembalikan ke restoran sebagai pakan ayam mandiri mereka.</p>
+                    </div>
+
+                    <!-- Postings Lists -->
+                    <div class="space-y-3 max-h-[220px] overflow-y-auto pr-1" id="drop-points-container">
+                        <!-- Listing 1 -->
+                        <div class="p-3 bg-stone-50 border border-slate-100 rounded-xl flex items-center justify-between text-xs transition duration-200" id="drop-point-1">
+                            <div class="space-y-1">
+                                <p class="font-bold text-slate-800">Restoran Padang Minang</p>
+                                <div class="flex items-center gap-1.5 text-[10px] text-slate-500">
+                                    <span class="px-1.5 py-0.5 bg-amber-100 text-amber-800 font-bold rounded-md">50 Kg Sisa Nasi</span>
+                                    <span>• Malang Barat</span>
+                                </div>
+                            </div>
+                            <button onclick="claimDropPointLimbah(1, 'Restoran Padang Minang', 50)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] rounded-lg transition">Klaim</button>
+                        </div>
+
+                        <!-- Listing 2 -->
+                        <div class="p-3 bg-stone-50 border border-slate-100 rounded-xl flex items-center justify-between text-xs transition duration-200" id="drop-point-2">
+                            <div class="space-y-1">
+                                <p class="font-bold text-slate-800">Warung Makan Sunda Lestari</p>
+                                <div class="flex items-center gap-1.5 text-[10px] text-slate-500">
+                                    <span class="px-1.5 py-0.5 bg-amber-100 text-amber-800 font-bold rounded-md">30 Kg Limbah Sayur</span>
+                                    <span>• Klojen, Malang</span>
+                                </div>
+                            </div>
+                            <button onclick="claimDropPointLimbah(2, 'Warung Makan Sunda Lestari', 30)" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] rounded-lg transition">Klaim</button>
+                        </div>
+                    </div>
+
+                    <!-- Claim Progress Tracker Card -->
+                    <div id="drop-point-tracker-panel" class="hidden p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl space-y-2 text-xs">
+                        <div class="flex items-center justify-between font-bold text-emerald-800">
+                            <span class="flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i> Proses Biokonversi Aktif</span>
+                            <span id="tracker-pct">40% Selesai</span>
+                        </div>
+                        <p class="text-[10px] text-slate-600 leading-relaxed">
+                            Anda mengklaim limbah dari <strong id="tracker-rest-name">Restoran Padang Minang</strong> sebesar <strong id="tracker-rest-weight">50</strong> Kg. Estimasi hasil maggot sirkular adalah <strong id="tracker-est-yield">10</strong> Kg. 
+                            <br><span class="text-emerald-700 font-semibold">• 20% bagian (<strong id="tracker-return-weight">2</strong> Kg) akan dikembalikan ke restoran sebagai pakan ayam mandiri mereka.</span>
+                        </p>
+                        <button onclick="completeCircularDropCycle()" class="w-full mt-1 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold rounded-lg transition">Selesaikan Siklus & Kirim 20% Maggot</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Traceability Pipeline Timeline -->
+            <div class="bg-white p-6 rounded-2xl border border-emerald-50 shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                    <!-- Line connector background -->
+                    <div class="hidden md:block absolute top-[28px] left-[12.5%] right-[12.5%] h-0.5 bg-emerald-100 -z-0"></div>
+
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center font-bold shadow-md shadow-emerald-50 border-4 border-white" id="step-1-icon">
+                            <i data-lucide="trash-2" class="w-6 h-6"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 text-xs mt-3">1. Pengumpulan Limbah</h5>
+                        <p class="text-[10px] text-slate-400 mt-1" id="step-1-detail">120 Kg Sayur & Buah dari Pasar Caringin Bandung.</p>
+                        <span class="mt-2 px-2.5 py-0.5 bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-full">Selesai Logistik</span>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div class="w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold shadow-md shadow-emerald-50 border-4 border-white" id="step-2-icon">
+                            <i data-lucide="refresh-cw" class="w-6 h-6 animate-spin"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 text-xs mt-3">2. Inokulasi & Biopond</h5>
+                        <p class="text-[10px] text-slate-400 mt-1" id="step-2-detail">Biopond Alpha - Penguraian Hari ke-10 Larva Aktif.</p>
+                        <span class="mt-2 px-2.5 py-0.5 bg-amber-50 text-amber-700 text-[9px] font-bold rounded-full">Berlangsung</span>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div class="w-14 h-14 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-bold border-4 border-white" id="step-3-icon">
+                            <i data-lucide="box" class="w-6 h-6"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 text-xs mt-3">3. Panen & Pengeringan</h5>
+                        <p class="text-[10px] text-slate-400 mt-1" id="step-3-detail">Pemisahan residu (frass) dengan maggot oven.</p>
+                        <span class="mt-2 px-2.5 py-0.5 bg-slate-50 text-slate-400 text-[9px] font-bold rounded-full">Belum Dimulai</span>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center text-center relative z-10">
+                        <div class="w-14 h-14 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center font-bold border-4 border-white" id="step-4-icon">
+                            <i data-lucide="check" class="w-6 h-6"></i>
+                        </div>
+                        <h5 class="font-bold text-slate-800 text-xs mt-3">4. Siap Distribusi</h5>
+                        <p class="text-[10px] text-slate-400 mt-1" id="step-4-detail">Pengemasan berstandardisasi Smartgotplace.</p>
+                        <span class="mt-2 px-2.5 py-0.5 bg-slate-50 text-slate-400 text-[9px] font-bold rounded-full">Belum Dimulai</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB: PYTHON SIMULATOR ================= -->
+        <section id="tab-python-simulator" class="tab-content hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Code Panel -->
+                <div class="bg-slate-900 text-slate-100 rounded-2xl overflow-hidden shadow-lg lg:col-span-7 flex flex-col justify-between border border-slate-800">
+                    <div>
+                        <!-- Editor Top -->
+                        <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="flex gap-1">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                                </div>
+                                <span class="text-[10px] font-bold font-mono text-slate-400 ml-2">bsf_calculator.py</span>
+                            </div>
+                            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded px-2 py-0.5 text-[9px] font-bold font-mono">Python 3.10</span>
+                        </div>
+
+                        <!-- Code Content -->
+                        <div class="p-5 font-mono text-xs overflow-x-auto leading-relaxed">
+                            <span class="text-emerald-400">import</span> math<br>
+                            <span class="text-emerald-400">import</span> json<br><br>
+                            
+                            <span class="text-slate-500"># Model Matematika Biologi Dekomposisi Sampah</span><br>
+                            <span class="text-emerald-400">def</span> <span class="text-sky-400">calculate_bsf_yield</span>(sampah_kg, populasi_larva):<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;laju_makan_maggot = <span class="text-amber-400">0.15</span> <span class="text-slate-500"># Kg sampah terurai per larva selama siklus hidup</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;biokonversi_efisiensi = <span class="text-amber-400">0.20</span> <span class="text-slate-500"># 20% berat terkonversi menjadi maggot</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;rasio_pupuk = <span class="text-amber-400">0.40</span> <span class="text-slate-500"># 40% sisa pakan menjadi pupuk frass</span><br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;kapasitas_maksimal_makan = populasi_larva * laju_makan_maggot<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;sampah_terolah = min(sampah_kg, kapasitas_maksimal_makan)<br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;maggot_wet = sampah_terolah * biokonversi_efisiensi<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;maggot_dry = maggot_wet * <span class="text-amber-400">0.32</span> <span class="text-slate-500"># Kadar kering 32%</span><br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;frass_pupuk = sampah_terolah * rasio_pupuk<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;reduksi_co2 = sampah_terolah * <span class="text-amber-400">2.5</span> <span class="text-slate-500"># Faktor reduksi gas metana/CO2</span><br><br>
+                            
+                            &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-emerald-400">return</span> {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-sky-400">"maggot_wet_kg"</span>: round(maggot_wet, 2),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-sky-400">"maggot_dry_kg"</span>: round(maggot_dry, 2),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-sky-400">"frass_kg"</span>: round(frass_pupuk, 2),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-sky-400">"co2_kg"</span>: round(reduksi_co2, 2)<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox Controllers -->
+                    <div class="bg-slate-950 p-5 border-t border-slate-800 space-y-3">
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">Sampah Organik Tersedia (Kg)</label>
+                                <input type="number" id="py-input-waste" value="100" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-emerald-400 font-mono outline-none focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="text-[10px] text-slate-400 font-bold uppercase block mb-1">Populasi Larva (Ekor)</label>
+                                <input type="number" id="py-input-larvae" value="10000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-emerald-400 font-mono outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+                        <button onclick="runPythonSandbox()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow-md shadow-emerald-950/30">
+                            <i data-lucide="play" class="w-4 h-4"></i> Jalankan Simulasi Engine
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Simulation Output -->
+                <div class="lg:col-span-5 flex flex-col gap-4">
+                    <!-- Terminal Console -->
+                    <div class="bg-slate-950 text-emerald-400 p-4 rounded-2xl shadow-xl font-mono text-[10px] sm:text-xs border border-slate-900 flex-grow flex flex-col justify-between min-h-[200px]">
+                        <div>
+                            <div class="flex items-center gap-2 text-slate-500 mb-3 pb-1 border-b border-slate-900">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                <span>Output Console Simulator</span>
+                            </div>
+                            <div id="py-console-output" class="space-y-1.5 leading-relaxed text-slate-300">
+                                <p class="text-slate-500">>>> Klik 'Jalankan Simulasi Engine' di sebelah kiri untuk melihat hasil kalkulasi biologis.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sandbox Results Widgets -->
+                    <div class="bg-white p-5 rounded-2xl border border-emerald-50 shadow-sm space-y-3">
+                        <h4 class="font-bold text-slate-800 text-sm">Visualisasi Hasil Simulasi</h4>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-emerald-50/20 p-3 rounded-xl border border-emerald-100/30">
+                                <p class="text-slate-400 font-bold text-[9px] uppercase">Maggot Basah</p>
+                                <p class="text-base font-extrabold text-slate-800 mt-0.5" id="py-wet">0.00 Kg</p>
+                            </div>
+                            <div class="bg-emerald-50/20 p-3 rounded-xl border border-emerald-100/30">
+                                <p class="text-slate-400 font-bold text-[9px] uppercase">Maggot Oven Kering</p>
+                                <p class="text-base font-extrabold text-emerald-600 mt-0.5" id="py-dry">0.00 Kg</p>
+                            </div>
+                            <div class="bg-emerald-50/20 p-3 rounded-xl border border-emerald-100/30">
+                                <p class="text-slate-400 font-bold text-[9px] uppercase">Pupuk Frass</p>
+                                <p class="text-base font-extrabold text-slate-800 mt-0.5" id="py-frass">0.00 Kg</p>
+                            </div>
+                            <div class="bg-emerald-50/20 p-3 rounded-xl border border-emerald-100/30">
+                                <p class="text-slate-400 font-bold text-[9px] uppercase">CO2 Reduksi</p>
+                                <p class="text-base font-extrabold text-teal-600 mt-0.5" id="py-co2">0.00 Kg</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL POPUP SIMULATOR FOR BUYING -->
+    <div id="buy-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4">
+        <div class="bg-white p-6 rounded-2xl max-w-sm w-full shadow-2xl space-y-4">
+            <div class="flex items-center gap-3 text-emerald-600">
+                <i data-lucide="phone-call" class="w-6 h-6"></i>
+                <h4 class="text-base font-bold text-slate-900">Hubungi Peternak</h4>
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+                Anda akan terhubung dengan platform komunikasi ManggotiX langsung ke nomor WhatsApp peternak terverifikasi untuk pemesanan <strong id="modal-item-name" class="text-slate-800"></strong> dengan harga <strong id="modal-item-price" class="text-emerald-600"></strong>.
+            </p>
+            <div class="flex items-center gap-2">
+                <button onclick="closeBuyModal()" class="w-1/2 py-2 bg-slate-100 text-slate-600 font-bold text-xs rounded-xl hover:bg-slate-200 transition">Batal</button>
+                <button onclick="confirmOrder()" class="w-1/2 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition shadow-md shadow-emerald-100">Kirim Chat</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION POPUP SIMULATOR -->
+    <div id="alert-box" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white p-4 rounded-xl shadow-xl flex items-center gap-3 border border-slate-800 animate-bounce">
+        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+        <div class="text-xs">
+            <p class="font-bold">Aksi Berhasil!</p>
+            <p class="text-slate-400">Data Anda telah dikirim dan tercatat dalam server lokal.</p>
+        </div>
+    </div>
+
+    <!-- SCRIPTS FOR INTERACTIVITY -->
+    <script>
+        // Global variables for dashboard
+        let wasteData = [350, 420, 310, 340];
+        let maggotData = [70, 84, 62, 68];
+        let totalWasteSum = 1420;
+        let chartInstance = null;
+
+        // IoT simulated sensor values state
+        let simulatedTemp = 34.2;
+        let simulatedHumidity = 68.4;
+        let simulatedAmmonia = 4.2;
+        let simulatedPh = 6.4;
+        let isExhaustFanOn = false;
+
+        // Fungsi untuk membunyikan alarm/bel peringatan menggunakan Web Audio API (aman tanpa aset luar)
+        function playAlarmSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const audioCtx = new AudioContext();
+                const now = audioCtx.currentTime;
+
+                // Beep pertama (High pitch chime)
+                const osc1 = audioCtx.createOscillator();
+                const gain1 = audioCtx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(987.77, now); // Nada B5
+                gain1.gain.setValueAtTime(0.3, now);
+                gain1.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc1.connect(gain1);
+                gain1.connect(audioCtx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.25);
+
+                // Beep kedua (Double alarm effect)
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(1174.66, now + 0.15); // Nada D6 lebih melengking
+                gain2.gain.setValueAtTime(0.3, now + 0.15);
+                gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.45);
+                osc2.connect(gain2);
+                gain2.connect(audioCtx.destination);
+                osc2.start(now + 0.15);
+                osc2.stop(now + 0.45);
+            } catch (e) {
+                console.warn("AudioContext diblokir oleh browser atau tidak didukung sampai ada interaksi klik pengguna.", e);
+            }
+        }
+
+        // Credible Academy Quiz State (15 Real Field Case Studies utilizing LaTeX)
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        const quizQuestions = [
+            {
+                q: "[Kasus Malang - Suhu Dingin Ekstrem] Di Tani Lestari Malang, suhu kandang turun drastis mencapai $18^\\circ\\text{C}$ pada malam hari. Larva BSF mulai melambat makannya dan terlihat diam bergerombol di sudut dasar biopond. Apa tindakan sirkular terbaik Anda?",
+                o: [
+                    "Menutup celah biopond dan menyalakan lampu pemanas (heater) pada malam hari guna menjaga suhu optimal $33^\\circ\\text{C} - 36^\\circ\\text{C}$.",
+                    "Menambahkan limbah pakan basah berkadar air tinggi agar media menjadi becek dan menyimpan panas sisa malam.",
+                    "Membiarkan seluruh larva mengalami hibernasi alami tanpa penyesuaian suhu, meskipun siklus panen molor 20 hari."
+                ],
+                a: 0,
+                ex: "Suhu optimal metabolisme larva BSF adalah $33^\\circ\\text{C} - 36^\\circ\\text{C}$. Suhu di bawah $20^\\circ\\text{C}$ membekukan aktivitas makan larva, sehingga intervensi pemanas eksternal sangat krusial."
+            },
+            {
+                q: "[Kasus Biopond Becek & Jamur Mikor] Bu Nabilla mendapati media biopond dipenuhi jamur putih halus berbau asam tajam. Larva mulai menguning, menghitam, lalu mati massal. Solusi apa yang paling tepat?",
+                o: [
+                    "Menyemprotkan fungisida kimia sintetis langsung ke atas media biopond.",
+                    "Menaburkan kapur dolomit untuk menaikkan $\\text{pH}$ dan mencampurkan dedak kering guna menyerap kelebihan kelembapan anaerobik.",
+                    "Memindahkan seluruh isi biopond ke wadah air untuk merendam larva dari kontaminasi jamur."
+                ],
+                a: 1,
+                ex: "Kapur dolomit menetralkan $\\text{pH}$ asam akibat pembusukan anaerobik, sementara dedak kering menurunkan kadar air berlebih yang menjadi media tumbuh utama spora jamur."
+            },
+            {
+                q: "[Perhitungan kuantitatif FCR] Satu biopond diberikan suplai sampah organik sebanyak $120\\text{ Kg}$. Setelah 18 hari siklus hidup, diperoleh hasil panen larva basah murni sebanyak $24\\text{ Kg}$. Berapakah nilai Feed Conversion Ratio ($FCR$) biopond tersebut?",
+                o: [
+                    "Nilai $FCR = 5.0$ (didapat dari rumus $\\frac{120\\text{ Kg}}{24\\text{ Kg}}$).",
+                    "Nilai $FCR = 0.2$ (didapat dari rumus $\\frac{24\\text{ Kg}}{120\\text{ Kg}}$).",
+                    "Nilai $FCR = 2.4$ (didapat dari perkalian berat basah dengan faktor konversi karbon)."
+                ],
+                a: 0,
+                ex: "Feed Conversion Ratio ($FCR$) dihitung dengan membagi bobot total pakan yang dikonsumsi dengan biomassa basah yang dihasilkan. Jadi, $120 / 24 = 5.0$ (setiap 5 Kg limbah menghasilkan 1 Kg maggot)."
+            },
+            {
+                q: "[Kasus Amonia Tinggi] Alat sensor IoT mendeteksi gas amonia di sekitar biopond menyentuh batas kritis $18\\text{ ppm}$ (normal $ < 10\\text{ ppm}$), menyebabkan larva panik dan bermigrasi keluar biopond sebelum waktunya. Bagaimana langkah mitigasinya?",
+                o: [
+                    "Menyemprotkan pengharum ruangan beraroma bunga untuk mematikan gas amonia.",
+                    "Mengurangi pakan kaya protein tinggi (seperti kepala ikan/daging busuk) dan mengoptimalkan aerasi udara menggunakan Exhaust Fan.",
+                    "Menutup rapat-rapat biopond menggunakan lembaran plastik tebal kedap udara."
+                ],
+                a: 1,
+                ex: "Gas amonia ($\\text{NH}_3$) diproduksi oleh bakteri pembusuk pakan tinggi protein nitrogen dalam kondisi anaerobik. Mengurangi konsentrasi protein dan mengaktifkan exhaust fan akan segera menekan akumulasi gas racun."
+            },
+            {
+                q: "[Biologi Metamorfosis - Fase Prepupa] Larva instar akhir berubah warna kulit menjadi cokelat tua kehitaman, berhenti makan, dan merayap menjauhi pakan basah. Fasilitas apa yang harus disiapkan peternak secara tepat?",
+                o: [
+                    "Memasukkan mereka kembali ke lumpur pakan yang basah agar tubuhnya tidak mengkerut.",
+                    "Menyediakan ramp (jalur menanjak) yang kering dan gelap menuju wadah penampungan prepupa (ramp-out system).",
+                    "Merendam larva dalam cairan alkohol untuk sterilisasi sebelum menjadi lalat."
+                ],
+                a: 1,
+                ex: "Fase prepupa dicirikan dengan berhentinya aktivitas makan dan hilangnya kemampuan mencerna. Insting alaminya adalah merayap mencari area kering, gelap, dan gembur untuk memulai fase pupasi."
+            },
+            {
+                q: "[Kasus Kegagalan Kawin di Love Cage] Lalat dewasa di dalam kandang perkawinan (*love cage*) tidak mau kawin meskipun populasinya padat. Cuaca di Malang sedang mendung kelabu selama 4 hari berturut-turut. Solusi rekayasa apa yang Anda tawarkan?",
+                o: [
+                    "Menyalakan lampu LED biasa berdaya tinggi di dalam kandang lalat.",
+                    "Menambahkan lampu khusus berspektrum penuh (*Full-Spectrum UV Light*) dengan panjang gelombang UV-A untuk merangsang fotoreseptor mata lalat.",
+                    "Menyemprotkan hormon feromon sintetis di udara kandang."
+                ],
+                a: 1,
+                ex: "Perkawinan lalat BSF dipicu secara optik oleh intensitas cahaya matahari langsung (terutama sinar UV-A). Lampu buatan berspektrum UV dapat merekayasa kondisi mendung agar proses reproduksi tetap berlangsung."
+            },
+            {
+                q: "[Kasus Invasi Hama Semut] Koloni semut merah menyerang biopond pembibitan telur dan memakan seluruh larva instar pertama ($L_1$) yang baru menetas. Langkah pencegahan fisik paling aman tanpa mencemari pakan adalah...",
+                o: [
+                    "Membuat parit air (water barrier) di sekeliling kaki penyangga rak biopond pembibitan.",
+                    "Menaburkan racun semut bubuk kimia sintetis di atas media penetasan telur.",
+                    "Menyemprotkan solar atau minyak tanah di seluruh permukaan dinding biopond."
+                ],
+                a: 0,
+                ex: "Metode parit air merupakan biosekuriti fisik paling aman karena semut tidak bisa melintasi air untuk naik ke rak, tanpa meracuni media pakan organik BSF Anda."
+            },
+            {
+                q: "[Kasus pH Pakan Asam Ekstrem] Bu Nabilla mengumpankan limbah kulit jeruk dalam jumlah besar, menyebabkan $\\text{pH}$ media anjlok ke angka $4.5$. Larva tampak melingkar lemas dan mogok makan. Langkah pemulihan terbaik adalah...",
+                o: [
+                    "Menambahkan cuka industri untuk menekan keasaman kembali.",
+                    "Mencampurkan kapur dolomit halus atau serbuk cangkang telur kering untuk menetralkan $\\text{pH}$ kembali ke batas aman $6.5 - 7.5$.",
+                    "Mengganti pakan dengan buah nanas busuk agar rasanya seimbang."
+                ],
+                a: 1,
+                ex: "Keasaman tinggi ($\\text{pH} < 5.0$) merusak kutikula luar larva dan merusak enzim pencernaan mereka. Penambahan kalsium karbonat (dolomit) mengikat asam bebas dan menstabilkan lingkungan hidup larva."
+            },
+            {
+                q: "[Kelembapan Inkubasi Telur] Papan kayu tempat bertelur lalat BSF (*eggies*) diletakkan langsung menyentuh tumpukan pakan sampah yang sangat basah dan beruap hangat di Malang Barat. Apa konsekuensi biologisnya?",
+                o: [
+                    "Telur membusuk atau terinfeksi jamur patogen akibat kondensasi uap air langsung yang terlalu berlebihan.",
+                    "Telur akan menetas 3 kali lebih cepat menjadi super-larva.",
+                    "Lalat dewasa yang dihasilkan akan berukuran raksasa karena kandungan air melimpah."
+                ],
+                a: 0,
+                ex: "Telur BSF membutuhkan kelembapan udara mikro yang stabil ($60\\% - 70\\%$) tetapi mutlak tidak boleh menyentuh air atau genangan air secara langsung karena akan mematikan embrio di dalam telur."
+            },
+            {
+                q: "[Kasus Fermentasi Anaerobik Berlebih] Ampas tahu alternatif disimpan dalam drum tertutup rapat selama 3 minggu. Ketika diberikan ke biopond, larva menolak memakannya dan memicu migrasi massal karena bau alkohol menyengat. Mengapa?",
+                o: [
+                    "Ampas tahu mengalami pembusukan aerobik yang melepaskan gas oksigen murni.",
+                    "Terjadi fermentasi anaerobik berlebih yang menghasilkan kadar alkohol tinggi dan asam asetat volatil yang bersifat toksik bagi larva.",
+                    "Larva BSF memiliki alergi bawaan terhadap produk protein nabati kedelai."
+                ],
+                a: 1,
+                ex: "Fermentasi anaerobik yang terlalu lama menghasilkan senyawa alkohol dan asam organik konsentrasi tinggi. Senyawa ini bersifat menolak (*repellent*) dan beracun bagi larva BSF jika diberikan langsung tanpa diangin-anginkan."
+            },
+            {
+                q: "[Kadar Air Penyimpanan Maggot Kering] Konsumen industri pakan mengeluhkan maggot kering Tani Lestari Malang berjamur setelah disimpan 10 hari. Kadar air produk akhir pasca-oven adalah $12\\%$. Berapa standar kadar air aman?",
+                o: [
+                    "Kadar air diturunkan hingga di bawah $5\\% - 8\\%$ dengan sistem pengemasan kedap udara dan penambahan silica gel.",
+                    "Kadar air dibiarkan $15\\%$ tetapi dicampur garam dapur kasar dalam jumlah banyak.",
+                    "Kadar air dinaikkan ke $25\\%$ agar maggot tetap empuk dan elastis."
+                ],
+                a: 0,
+                ex: "Kadar air di bawah $8\\%$ merupakan standar kritis industri untuk menghentikan seluruh aktivitas mikroba, pembusukan lipid, dan pertumbuhan spora kapang selama masa penyimpanan kering."
+            },
+            {
+                q: "[Kasus Overcrowding Populasi] Di biopond berukuran $1\\text{ m} \\times 1\\text{ m}$, Bu Nabilla menebarkan $50\\text{ gram}$ telur BSF sekaligus. Larva tumbuh kerdil, tipis, dan kurus meskipun pakan melimpah. Apa faktor pembatas utamanya?",
+                o: [
+                    "Biopond kekurangan asupan cahaya lampu ultraviolet pada malam hari.",
+                    "Kepadatan berlebih (*overcrowding*) memicu kompetisi ruang gerak ekstrim dan penumpukan suhu metabolisme terlalu panas (overheating) di dalam media.",
+                    "Jenis kayu papan biopond menghambat sekresi pertumbuhan hormon larva."
+                ],
+                a: 1,
+                ex: "Kepadatan tebar optimal adalah $3 - 5\\text{ gram}$ telur per meter persegi. Tebaran $50\\text{ gram}$ per $\\text{m}^2$ menyebabkan kompetisi ruang hidup ekstrem dan akumulasi panas tubuh larva yang justru menghambat pertumbuhan mereka."
+            },
+            {
+                q: "[Kasus Nutrisi Lalat Dewasa] Seorang peternak memberi makan lalat BSF dewasa dalam love cage dengan sisa potongan daging sapi setiap hari dengan harapan telur melimpah. Namun, lalat justru cepat mati tanpa bertelur. Mengapa?",
+                o: [
+                    "Lalat BSF dewasa mengalami atrofi (degenerasi) mulut dan saluran pencernaan; mereka tidak makan pakan padat dan hanya butuh air/nektar untuk hidrasi.",
+                    "Daging sapi terlalu keras untuk digigit oleh taring lalat BSF dewasa.",
+                    "Lalat BSF merupakan hewan vegetarian murni yang benci aroma daging."
+                ],
+                a: 0,
+                ex: "Lalat BSF dewasa tidak memiliki bagian mulut fungsional untuk mengunyah pakan padat. Energi hidupnya berasal dari akumulasi lemak saat fase larva, sehingga mereka hanya membutuhkan kelembapan air minum untuk kawin."
+            },
+            {
+                q: "[Pencegahan Bioakumulasi Logam Berat] Jika larva BSF diberi pakan limbah lumpur selokan industri manufaktur, larva tumbuh gemuk dan besar. Mengapa larva ini mutlak dilarang untuk dijadikan pakan ternak ikan atau ayam konsumsi manusia?",
+                o: [
+                    "Larva BSF mengakumulasi kandungan logam berat berbahaya (bioakumulasi) seperti Kadmium ($\\text{Cd}$) atau Timbal ($\\text{Pb}$) yang dapat berpindah ke manusia melalui ikan (biomagnifikasi).",
+                    "Ikan lele atau ayam akan langsung mati dalam waktu 3 detik setelah memakan larva tersebut.",
+                    "Rasa daging ikan lele akan berubah menjadi seperti rasa besi karat."
+                ],
+                a: 0,
+                ex: "BSF memiliki toleransi luar biasa terhadap polutan, tetapi logam berat dari medianya terakumulasi di dalam jaringan lemak mereka. Ini berisiko meracuni rantai makanan manusia jika dikonsumsi."
+            },
+            {
+                q: "[Studi Kasus Fototaksis Negatif] Rak biopond pembesaran diletakkan di bawah terik sinar matahari langsung tanpa peneduh. Larva terlihat terus-menerus menyelam menjauhi permukaan pakan dan mogok memakan limbah atas. Tindakan terbaik Anda adalah...",
+                o: [
+                    "Menyiram biopond dengan air es agar dingin.",
+                    "Memberikan penutup peneduh gelap di atas permukaan biopond karena larva BSF bersifat fotofobik (menolak cahaya langsung).",
+                    "Mengganti seluruh pakan atas dengan potongan daun pisang hijau."
+                ],
+                a: 1,
+                ex: "Larva BSF memiliki sifat fototaksis negatif (menghindari cahaya). Memberikan peneduh di atas biopond memastikan larva merasa aman untuk terus naik dan mengurai pakan di permukaan biopond secara optimal."
+            }
+        ];
+
+        window.onload = function() {
+            lucide.createIcons();
+            initDashboardChart();
+            runPythonSandbox(); // Load default simulator numbers on start
+            loadAcademyQuizQuestion(); // Load first quiz step
+            
+            // Periodically update sensor data simulation slightly to make it feel alive
+            setInterval(simulateSensorFluctuations, 5000);
+        }
+
+        // Simulation of Sensor fluctuations
+        function simulateSensorFluctuations() {
+            // Fluctuate slightly
+            simulatedTemp = +(simulatedTemp + (Math.random() * 0.4 - 0.2)).toFixed(1);
+            simulatedHumidity = +(simulatedHumidity + (Math.random() * 1.0 - 0.5)).toFixed(1);
+            simulatedAmmonia = +(simulatedAmmonia + (Math.random() * 0.4 - 0.2)).toFixed(1);
+            
+            updateSensorUI();
+        }
+
+        function adjustSimulatedTemp(amount) {
+            simulatedTemp = +(simulatedTemp + amount).toFixed(1);
+            updateSensorUI();
+        }
+
+        function resetSimulatedSensors() {
+            simulatedTemp = 34.2;
+            simulatedHumidity = 68.4;
+            simulatedAmmonia = 4.2;
+            simulatedPh = 6.4;
+            updateSensorUI();
+        }
+
+        function updateSensorUI() {
+            document.getElementById('sensor-temp-val').innerText = simulatedTemp.toFixed(1);
+            document.getElementById('sensor-humidity-val').innerText = simulatedHumidity.toFixed(1);
+            document.getElementById('sensor-ammonia-val').innerText = simulatedAmmonia.toFixed(1);
+            document.getElementById('sensor-ph-val').innerText = simulatedPh.toFixed(1);
+
+            const tempCard = document.getElementById('sensor-temp-card');
+            const tempStatus = document.getElementById('sensor-temp-status');
+            const warningBanner = document.getElementById('iot-warning-banner');
+            const fanBadge = document.getElementById('actuator-fan-badge');
+
+            // Trigger automation warning logic: if temp is less than 33 degrees
+            if (simulatedTemp < 33.0) {
+                // Suhu kurang dari 33 derajat -> WARNING AKTIF + NYALAKAN EXHAUST FAN
+                tempCard.className = "bg-rose-50 border-rose-300 p-4 rounded-2xl border text-rose-900";
+                tempStatus.className = "px-2 py-0.5 bg-rose-500 text-white text-[9px] font-bold rounded-full animate-bounce";
+                tempStatus.innerText = "Suhu Rendah";
+                
+                warningBanner.classList.remove('hidden');
+                
+                fanBadge.className = "px-3 py-1 bg-rose-500 text-white rounded-full flex items-center gap-1 font-bold animate-pulse";
+                fanBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span> MATI (Exhaust Berjalan)`;
+                
+                if (!isExhaustFanOn) {
+                    isExhaustFanOn = true;
+                    // Membunyikan suara bel peringatan saat sistem menyala otomatis
+                    playAlarmSound();
+                    // Trigger a system notification simulator
+                    triggerAutomationToast("Sistem IoT: Mengaktifkan kipas Exhaust Fan & Heater otomatis pada Biopond Alpha!");
+                }
+            } else {
+                // Normal temperature
+                tempCard.className = "bg-slate-50/50 border-emerald-50/80 p-4 rounded-2xl border";
+                tempStatus.className = "px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[9px] font-bold rounded-full";
+                tempStatus.innerText = "Normal";
+                
+                warningBanner.classList.add('hidden');
+                
+                fanBadge.className = "px-3 py-1 bg-slate-100 text-slate-500 rounded-full flex items-center gap-1 font-bold";
+                fanBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> MATI (Sistem Siaga)`;
+                isExhaustFanOn = false;
+            }
+        }
+
+        function triggerAutomationToast(msg) {
+            const alertBox = document.getElementById('alert-box');
+            alertBox.querySelector('.font-bold').innerText = "Otomatisasi IoT";
+            alertBox.querySelector('.text-slate-400').innerText = msg;
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        // PAKAR MAGGOT AI INTELLIGENCE SYSTEM
+        async function askGeminiAPI(promptText, base64ImageData = null, mimeType = null) {
+            const apiKey = ""; // Leave as-is. Canvas automatically replaces at runtime.
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+            
+            // Construct request payload
+            const payload = {
+                contents: [
+                    {
+                        role: "user",
+                        parts: [
+                            { text: promptText }
+                        ]
+                    }
+                ],
+                systemInstruction: {
+                    parts: [{ 
+                        text: "Kamu adalah Pakar Budidaya BSF (Black Soldier Fly) berpengalaman dari Indonesia. Bantu pengguna (Bu Nabilla dari Tani Lestari Malang) mendiagnosis kendala biopond mereka dengan ramah, berikan saran praktis, ilmiah, dan mudah dimengerti." 
+                    }]
+                }
+            };
+
+            // If we have an image, add it as inlineData
+            if (base64ImageData && mimeType) {
+                payload.contents[0].parts.push({
+                    inlineData: {
+                        mimeType: mimeType,
+                        data: base64ImageData
+                    }
+                });
+            }
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!response.ok) {
+                    throw new Error("HTTP status " + response.status);
+                }
+
+                const result = await response.json();
+                const textOutput = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                return textOutput || "Maaf, asisten AI sedang beristirahat. Pastikan pakan terjaga dan kelembapan dikontrol.";
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                // Fallback smart response in case of connectivity / API issue
+                if (promptText.toLowerCase().includes("hitam")) {
+                    return "Berdasarkan gejala larva atau maggot tiba-tiba berubah warna menjadi hitam sebelum fasenya (prepupa), ini merupakan indikasi kuat infeksi **jamur (Mikor)** akibat kondisi lingkungan biopond yang terlampau becek atau lembap.\n\n**Saran Tindakan Segera:**\n1. **Kurangi Kelembapan:** Stop pemberian pakan basah berlebih. Berikan dedak kering atau ampas kelapa untuk menyerap kelebihan air.\n2. **Taburkan Kapur Dolomit:** Taburkan kapur dolomit secukupnya pada media untuk membunuh patogen jamur serta menstabilkan pH asam biopond agar ramah bagi sisa maggot sehat.";
+                }
+                return "Maaf, saya kesulitan terhubung ke server utama. Pastikan koneksi internet Anda lancar. Saran dasar: pastikan biopond tidak becek dan aerasi lancar.";
+            }
+        }
+
+        // AI Market Price Analysis Engine
+        async function fetchPriceAnalysisAI() {
+            const adviceContainer = document.getElementById('ai-price-recommendation-text');
+            adviceContainer.innerHTML = `<span class="flex items-center gap-1.5"><i data-lucide="refresh-cw" class="w-3.5 h-3.5 animate-spin"></i> Merumuskan prakiraan analitik harga pasar...</span>`;
+            lucide.createIcons();
+
+            const queryPrompt = "Mengingat harga pakan unggas nasional sedang fluktuatif di Malang dan Indonesia, tolong berikan analisis pasar 1 paragraf ringkas berisi pergerakan harga terbaik untuk menjual produk larva BSF (kering atau basah) beserta rekomendasi waktu rilis stok terbaik untuk peternak Tani Lestari Malang saat ini.";
+            
+            try {
+                const aiResult = await askGeminiAPI(queryPrompt);
+                adviceContainer.innerText = aiResult;
+            } catch (e) {
+                adviceContainer.innerText = "Harga maggot kering cenderung naik di area Malang (estimasi Rp45.000-Rp48.000/Kg) karena meningkatnya permintaan industri akuakultur ikan koi hias lokal. Rekomendasi AI: Tahan stok basah selama 3 hari ke depan, lakukan pengovenan kering bertahap, dan lepaskan seluruh komoditas kering di pertengahan minggu ini saat harga mencapai titik optimal.";
+            }
+        }
+
+        // Handle user prompt submit
+        async function handleAIChatSubmit(event) {
+            event.preventDefault();
+            const promptInput = document.getElementById('ai-prompt-input');
+            const userText = promptInput.value.trim();
+            if (!userText) return;
+
+            appendChatMessage("Anda (Bu Nabilla)", userText, true);
+            promptInput.value = '';
+
+            // Show loading
+            const loader = document.getElementById('ai-loading-state');
+            loader.classList.remove('hidden');
+
+            // Send to Gemini
+            const aiResponseText = await askGeminiAPI(userText);
+            
+            loader.classList.add('hidden');
+            appendChatMessage("Pakar Maggot AI", aiResponseText, false);
+        }
+
+        // Simulate fast diagnostic using preset pictures
+        async function simulateAIDiagnostic(type) {
+            const loader = document.getElementById('ai-loading-state');
+            loader.classList.remove('hidden');
+
+            let query = "";
+            if (type === 'maggot_hitam') {
+                appendChatMessage("Anda (Bu Nabilla)", "📷 [Foto Terlampir]: Mengapa maggot di biopond Alpha saya tiba-tiba menghitam secara massal padahal belum fase prepupa?", true);
+                query = "Mengapa maggot saya tiba-tiba hitam mendadak secara massal, padahal belum waktunya prepupa? Ini fotonya.";
+            } else if (type === 'pupa_gagal') {
+                appendChatMessage("Anda (Bu Nabilla)", "📷 [Foto Terlampir]: Pupa saya di ruang penetasan banyak yang mengering dan tidak menetas menjadi lalat BSF. Apa penyebabnya?", true);
+                query = "Pupa saya mengering dan gagal menetas menjadi lalat. Berikan analisis penyebab dan cara mengatasi kelembapannya.";
+            }
+
+            const response = await askGeminiAPI(query);
+            loader.classList.add('hidden');
+            appendChatMessage("Pakar Maggot AI", response, false);
+        }
+
+        function appendChatMessage(sender, text, isUser) {
+            const historyContainer = document.getElementById('ai-chat-history');
+            const chatBubble = document.createElement('div');
+            chatBubble.className = "flex gap-2.5 items-start " + (isUser ? "justify-end" : "");
+
+            const avatarClass = isUser ? "bg-emerald-100 text-emerald-800" : "bg-emerald-600 text-white";
+            const avatarTxt = isUser ? "BN" : "AI";
+            const bubbleClass = isUser ? "bg-emerald-50 border border-emerald-100" : "bg-white border border-slate-100";
+
+            chatBubble.innerHTML = `
+                ${!isUser ? `<div class="w-7 h-7 rounded-full ${avatarClass} flex items-center justify-center font-bold text-[10px] shrink-0">${avatarTxt}</div>` : ''}
+                <div class="${bubbleClass} p-3 rounded-2xl shadow-sm max-w-[85%]">
+                    <p class="font-bold text-emerald-800 text-[10px] mb-1">${sender}</p>
+                    <p class="whitespace-pre-line">${text}</p>
+                </div>
+                ${isUser ? `<div class="w-7 h-7 rounded-full ${avatarClass} flex items-center justify-center font-bold text-[10px] shrink-0">${avatarTxt}</div>` : ''}
+            `;
+            
+            historyContainer.appendChild(chatBubble);
+            historyContainer.scrollTop = historyContainer.scrollHeight;
+        }
+
+        // Support manual uploaded photo base64 send
+        document.getElementById('ai-image-upload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = async function(evt) {
+                const base64Data = evt.target.result.split(',')[1];
+                const loader = document.getElementById('ai-loading-state');
+                loader.classList.remove('hidden');
+
+                appendChatMessage("Anda (Bu Nabilla)", `📷 mengunggah foto: ${file.name}. Minta analisis diagnosa dari gambar ini.`, true);
+
+                const response = await askGeminiAPI("Tolong periksa foto biopond saya ini. Jika ada kendala seperti infeksi penyakit atau jamur, jelaskan dan berikan penanganannya.", base64Data, file.type);
+                
+                loader.classList.add('hidden');
+                appendChatMessage("Pakar Maggot AI", response, false);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // Drop Points & Circular Collaboration claim system
+        function claimDropPointLimbah(id, restaurantName, weight) {
+            const btn = document.querySelector(`#drop-point-${id} button`);
+            btn.disabled = true;
+            btn.className = "px-3 py-1.5 bg-slate-300 text-slate-500 font-bold text-[10px] rounded-lg cursor-not-allowed";
+            btn.innerText = "Terklaim";
+
+            // Open Tracker Card
+            document.getElementById('drop-point-tracker-panel').classList.remove('hidden');
+            document.getElementById('tracker-rest-name').innerText = restaurantName;
+            document.getElementById('tracker-rest-weight').innerText = weight;
+            
+            const estimatedYield = (weight * 0.20).toFixed(1);
+            document.getElementById('tracker-est-yield').innerText = estimatedYield;
+            document.getElementById('tracker-return-weight').innerText = (estimatedYield * 0.20).toFixed(1);
+            
+            triggerNotification("Drop Point Terklaim!", `Anda mengklaim limbah organik ${restaurantName}. Siapkan Biopond!`);
+        }
+
+        function completeCircularDropCycle() {
+            document.getElementById('drop-point-tracker-panel').classList.add('hidden');
+            
+            // Add to stats
+            triggerNotification("Siklus Berhasil!", "20% hasil pakan maggot telah dialokasikan kembali ke kandang ayam restoran mitra.");
+            
+            // Increment statistics
+            totalWasteSum += 50;
+            document.getElementById('dash-waste').innerText = `${totalWasteSum.toLocaleString('id-ID')} Kg`;
+        }
+
+        // Switch Tabs Functionality
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(element => {
+                element.classList.add('hidden');
+            });
+            // Show selected tab
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Reset navigation menu styling (desktop)
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-emerald-600', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'hover:text-emerald-700');
+            });
+            // Active Desktop Menu styling
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:text-emerald-700');
+                activeBtn.classList.add('bg-emerald-600', 'text-white', 'shadow-sm');
+            }
+
+            // Reset navigation menu styling (mobile)
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('text-emerald-600');
+                btn.classList.add('text-slate-400');
+            });
+            // Active Mobile Menu styling
+            const activeMobileBtn = document.getElementById(`m-btn-${tabId}`);
+            if (activeMobileBtn) {
+                activeMobileBtn.classList.remove('text-slate-400');
+                activeMobileBtn.classList.add('text-emerald-600');
+            }
+        }
+
+        // Initialize Dashboard Chart (Chart.js)
+        function initDashboardChart() {
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
+                    labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4'],
+                    datasets: [
+                        {
+                            label: 'Limbah Masuk (Kg)',
+                            data: wasteData,
+                            borderColor: '#059669', // Emerald 600
+                            backgroundColor: 'rgba(5, 150, 105, 0.04)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        },
+                        {
+                            label: 'Panen Maggot (Kg)',
+                            data: maggotData,
+                            borderColor: '#0d9488', // Teal 600
+                            backgroundColor: 'rgba(13, 148, 136, 0.04)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                font: {
+                                    family: 'Plus Jakarta Sans',
+                                    size: 10,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#eefcf5'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Academy Multi-Step Quiz Logic (Loads real LaTeX Case Studies dynamically)
+        function loadAcademyQuizQuestion() {
+            const qObj = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-step-indicator').innerText = `${currentQuizIndex + 1} / ${quizQuestions.length}`;
+            
+            // Progress Bar adjustment
+            const pct = ((currentQuizIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+
+            document.getElementById('academy-quiz-question').innerText = qObj.q;
+            
+            const optionsBox = document.getElementById('academy-quiz-options');
+            optionsBox.innerHTML = '';
+            
+            qObj.o.forEach((optStr, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left p-3 border border-emerald-100 rounded-xl hover:bg-emerald-50 bg-emerald-50/10 font-semibold transition text-xs leading-relaxed";
+                btn.innerHTML = optStr;
+                btn.onclick = () => selectQuizAnswer(idx);
+                optionsBox.appendChild(btn);
+            });
+
+            // Re-render LaTeX beautifully via MathJax
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        function selectQuizAnswer(selectedIdx) {
+            const qObj = quizQuestions[currentQuizIndex];
+            const isCorrect = (selectedIdx === qObj.a);
+            
+            if (isCorrect) quizScore++;
+
+            // Rich visual dialog containing detailed explanations
+            triggerNotification(
+                isCorrect ? "Jawaban Anda Benar!" : "Jawaban Kurang Tepat", 
+                qObj.ex
+            );
+
+            // Move to next step smoothly after a short delay for studying explanations
+            setTimeout(() => {
+                currentQuizIndex++;
+                if (currentQuizIndex < quizQuestions.length) {
+                    loadAcademyQuizQuestion();
+                } else {
+                    // Show final scoring & official biodata submission form
+                    const finalPercentage = Math.round((quizScore / quizQuestions.length) * 100);
+                    showQuizFormSubmission(finalPercentage);
+                }
+            }, 6000); // 6 seconds to let user read the complete scientific rationale
+        }
+
+        function showQuizFormSubmission(scorePct) {
+            document.getElementById('quiz-wrapper').classList.add('hidden');
+            document.getElementById('quiz-progress-bar').parentElement.classList.add('hidden');
+            document.getElementById('quiz-step-indicator').classList.add('hidden');
+            
+            document.getElementById('quiz-biodata-form').classList.remove('hidden');
+            document.getElementById('passed-score-lbl').innerText = scorePct;
+            document.getElementById('quiz-controls').classList.remove('hidden');
+
+            // Prefill defaults with Malang's Bu Nabilla
+            document.getElementById('cert-fullname').value = "Bu Nabilla";
+            document.getElementById('cert-instansi').value = "Tani Lestari Malang";
+            document.getElementById('cert-city').value = "Malang";
+        }
+
+        function generateOfficialCertificate() {
+            const name = document.getElementById('cert-fullname').value.trim();
+            const instansi = document.getElementById('cert-instansi').value.trim();
+            const city = document.getElementById('cert-city').value.trim();
+
+            if (!name || !instansi || !city) {
+                triggerNotification("Kesalahan Pengisian", "Silakan lengkapi formulir biodata terlebih dahulu.");
+                return;
+            }
+
+            // Prefill modal
+            document.getElementById('cert-recipient-name').innerText = name.toUpperCase();
+            document.getElementById('cert-recipient-instansi').innerText = instansi;
+            document.getElementById('cert-recipient-city').innerText = city;
+            
+            // Random Verified ID generator
+            const randLicense = `CERT-BSF-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+            document.getElementById('cert-verified-id').innerText = randLicense;
+
+            // Open Modal
+            document.getElementById('cert-modal').classList.remove('hidden');
+        }
+
+        function closeCertModal() {
+            document.getElementById('cert-modal').classList.add('hidden');
+            resetAcademyQuiz();
+        }
+
+        function resetAcademyQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-wrapper').classList.remove('hidden');
+            document.getElementById('quiz-progress-bar').parentElement.classList.remove('hidden');
+            document.getElementById('quiz-step-indicator').classList.remove('hidden');
+            
+            document.getElementById('quiz-biodata-form').classList.add('hidden');
+            document.getElementById('quiz-controls').classList.add('hidden');
+            loadAcademyQuizQuestion();
+        }
+
+        // Submit daily log
+        function submitLog(event) {
+            event.preventDefault();
+            const clusterName = document.getElementById('log-cluster').value;
+            const wasteIn = parseFloat(document.getElementById('log-waste-weight').value) || 0;
+            const maggotOut = parseFloat(document.getElementById('log-maggot-weight').value) || 0;
+
+            if (wasteIn <= 0 || maggotOut <= 0) return;
+
+            // Update stats
+            totalWasteSum += wasteIn;
+            const updatedMaggotSum = Math.round(totalWasteSum * 0.2);
+            const updatedCo2Sum = Math.round(totalWasteSum * 2.5);
+            const updatedRevenue = (updatedMaggotSum * 12000).toLocaleString('id-ID');
+
+            document.getElementById('dash-waste').innerText = `${totalWasteSum.toLocaleString('id-ID')} Kg`;
+            document.getElementById('dash-maggot').innerText = `${updatedMaggotSum.toLocaleString('id-ID')} Kg`;
+            document.getElementById('dash-co2').innerText = `${updatedCo2Sum.toLocaleString('id-ID')} Kg`;
+            document.getElementById('dash-revenue').innerText = `Rp ${updatedRevenue}`;
+
+            // Add item to dashboard table
+            const tableBody = document.getElementById('dashboard-table');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td class="py-2 text-slate-500">10 Juni 2026</td>
+                <td class="py-2 font-semibold text-emerald-800">${clusterName}</td>
+                <td class="py-2 text-right font-medium">${wasteIn} Kg</td>
+                <td class="py-2 text-right font-bold text-emerald-600">${maggotOut.toFixed(1)} Kg</td>
+                <td class="py-2 text-center"><span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-bold rounded-full text-[9px]">Selesai Konversi</span></td>
+            `;
+            tableBody.insertBefore(row, tableBody.firstChild);
+
+            // Update chart data visualizer
+            wasteData.push(wasteIn);
+            maggotData.push(maggotOut);
+            chartInstance.data.labels.push(`Minggu ${wasteData.length}`);
+            chartInstance.update();
+
+            // Reset inputs
+            document.getElementById('log-waste-weight').value = '';
+            document.getElementById('log-maggot-weight').value = '';
+
+            // Toast animation
+            triggerToastNotification();
+        }
+
+        // Smartgotplace Modal Trigger
+        function buyProduct(name, price) {
+            document.getElementById('modal-item-name').innerText = name;
+            document.getElementById('modal-item-price').innerText = price;
+            document.getElementById('buy-modal').classList.remove('hidden');
+        }
+
+        function closeBuyModal() {
+            document.getElementById('buy-modal').classList.add('hidden');
+        }
+
+        function confirmOrder() {
+            closeBuyModal();
+            triggerToastNotification();
+        }
+
+        // Manggot Collect logistics scheduler
+        function scheduleCollect(event) {
+            event.preventDefault();
+            const type = document.querySelector('input[name="collect-type"]:checked').value;
+            const weight = document.getElementById('collect-weight').value;
+            const date = document.getElementById('collect-date').value;
+            const address = document.getElementById('collect-address').value;
+
+            // Create schedule visual card
+            const list = document.getElementById('collect-schedule-list');
+            const card = document.createElement('div');
+            card.className = 'p-4 bg-emerald-50/20 rounded-2xl border border-emerald-100/50 space-y-3';
+            card.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <div>
+                        <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 font-bold rounded-full text-[9px] uppercase tracking-wider">LOGISTIK BARU</span>
+                        <h5 class="font-bold text-slate-800 text-xs mt-1">Order #MC-${Math.floor(1000 + Math.random() * 9000)} - ${type}</h5>
+                    </div>
+                    <span class="text-xs font-bold text-amber-600">Diproses Operator</span>
+                </div>
+                <div class="grid grid-cols-3 gap-1.5 text-center text-[10px] font-semibold text-slate-500 pt-2 border-t border-emerald-100/30">
+                    <div class="bg-white p-2 rounded-xl">
+                        <p class="text-slate-400">Berat</p>
+                        <p class="font-bold text-slate-800 mt-0.5">${weight} Kg</p>
+                    </div>
+                    <div class="bg-white p-2 rounded-xl">
+                        <p class="text-slate-400">Jadwal</p>
+                        <p class="font-bold text-slate-800 mt-0.5">${date}</p>
+                    </div>
+                    <div class="bg-white p-2 rounded-xl">
+                        <p class="text-slate-400">Alamat</p>
+                        <p class="font-bold text-emerald-600 mt-0.5 truncate">${address}</p>
+                    </div>
+                </div>
+            `;
+            list.insertBefore(card, list.firstChild);
+
+            // Reset inputs
+            document.getElementById('collect-weight').value = '';
+            document.getElementById('collect-address').value = '';
+            document.getElementById('collect-date').value = '';
+
+            triggerToastNotification();
+        }
+
+        // Toggle styling of Custom Radios in Manggot Collect
+        function toggleCollectType(selected) {
+            const wasteLbl = document.getElementById('label-collect-waste');
+            const maggotLbl = document.getElementById('label-collect-maggot');
+
+            if (selected === 'waste') {
+                wasteLbl.classList.remove('border-slate-100');
+                wasteLbl.classList.add('border-emerald-500');
+                maggotLbl.classList.remove('border-emerald-500');
+                maggotLbl.classList.add('border-slate-100');
+            } else {
+                maggotLbl.classList.remove('border-slate-100');
+                maggotLbl.classList.add('border-emerald-500');
+                wasteLbl.classList.remove('border-emerald-500');
+                wasteLbl.classList.add('border-slate-100');
+            }
+        }
+
+        // Global trigger custom dialog alert substitute
+        function triggerNotification(headerTitle, messageText) {
+            const alertBox = document.getElementById('alert-box');
+            alertBox.querySelector('.font-bold').innerText = headerTitle;
+            alertBox.querySelector('.text-slate-400').innerText = messageText;
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 7000);
+        }
+
+        // Supply Chain Data update mock
+        function updateSupplyChainChain() {
+            const selector = document.getElementById('supply-batch-selector').value;
+            const s1Detail = document.getElementById('step-1-detail');
+            const s2Detail = document.getElementById('step-2-detail');
+            const s3Detail = document.getElementById('step-3-detail');
+            const s4Detail = document.getElementById('step-4-detail');
+
+            if (selector === 'BATCH-BSF-029') {
+                s1Detail.innerText = "120 Kg Sayur & Buah dari Pasar Caringin Bandung.";
+                s2Detail.innerText = "Biopond Alpha - Penguraian Hari ke-10 Larva Aktif.";
+                s3Detail.innerText = "Pemisahan residu (frass) dengan maggot oven.";
+                s4Detail.innerText = "Pengemasan berstandardisasi Smartgotplace.";
+            } else {
+                s1Detail.innerText = "85 Kg Sisa Makanan dari Restoran Lestari Cimahi.";
+                s2Detail.innerText = "Biopond Gamma - Penguraian Hari ke-4 Larva Muda.";
+                s3Detail.innerText = "Pemisahan serat halus sebelum pupuk dipak.";
+                s4Detail.innerText = "Standardisasi uji nutrisi lab sirkuler BSF.";
+            }
+            triggerToastNotification();
+        }
+
+        // Python Sandbox Simulation Compiler Simulator
+        function runPythonSandbox() {
+            const waste = parseFloat(document.getElementById('py-input-waste').value) || 0;
+            const larvae = parseFloat(document.getElementById('py-input-larvae').value) || 0;
+
+            const consoleElement = document.getElementById('py-console-output');
+            consoleElement.innerHTML = `
+                <p class="text-blue-400">$ python bsf_calculator.py --waste=${waste} --larvae=${larvae}</p>
+                <p class="text-slate-500">Loading biologic parameters...</p>
+                <p class="text-slate-500">Processing mathematical growth matrix equations...</p>
+            `;
+
+            setTimeout(() => {
+                // Bioreactor formula
+                const feedingRate = 0.15; // Kg trash consumption per larva lifetime
+                const maxConsumption = larvae * feedingRate;
+                const processedWaste = Math.min(waste, maxConsumption);
+
+                const wetYield = processedWaste * 0.20; // 20% conversion efficiency to wet maggot
+                const dryYield = wetYield * 0.32; // 32% dry matter
+                const frassYield = processedWaste * 0.40; // 40% organic residue output
+                const co2Reduction = processedWaste * 2.5; // 2.5kg CO2 saving ratio per kg organic waste BSF conversion
+
+                consoleElement.innerHTML += `
+                    <p class="text-emerald-400 font-bold">[SUCCESS] Code compilation completed.</p>
+                    <p class="text-slate-200">---------------------------------------</p>
+                    <p class="text-amber-400 font-semibold">Rekomendasi Populasi Penyeimbang: ${Math.round(waste/feedingRate).toLocaleString('id-ID')} Ekor Larva</p>
+                    <p class="text-slate-300">Hasil Biomassa Basah: ${wetYield.toFixed(2)} Kg</p>
+                    <p class="text-slate-300">Hasil Biomassa Kering: ${dryYield.toFixed(2)} Kg</p>
+                    <p class="text-slate-300">Residu Organik (Frass): ${frassYield.toFixed(2)} Kg</p>
+                    <p class="text-indigo-400 font-bold">Emisi Terhindarkan: ${co2Reduction.toFixed(2)} Kg CO2e</p>
+                `;
+
+                // Set result visuals
+                document.getElementById('py-wet').innerText = `${wetYield.toFixed(2)} Kg`;
+                document.getElementById('py-dry').innerText = `${dryYield.toFixed(2)} Kg`;
+                document.getElementById('py-frass').innerText = `${frassYield.toFixed(2)} Kg`;
+                document.getElementById('py-co2').innerText = `${co2Reduction.toFixed(2)} Kg CO2e`;
+            }, 600);
+        }
+
+        // Global Alert Trigger Toast
+        function triggerToastNotification() {
+            const alertBox = document.getElementById('alert-box');
+            alertBox.querySelector('.font-bold').innerText = "Aksi Berhasil!";
+            alertBox.querySelector('.text-slate-400').innerText = "Data Anda telah dikirim dan tercatat dalam server lokal.";
+            alertBox.classList.remove('hidden');
+            setTimeout(() => {
+                alertBox.classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
